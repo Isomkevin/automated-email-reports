@@ -1,16 +1,31 @@
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import schedule
 import time
+import datetime
+from dotenv import load_dotenv
 
-def send_email():
-    # Email configuration
-    sender_email = "your_email@example.com"
-    sender_password = "your_password"
-    receiver_email = "recipient@example.com"
-    subject = "Daily Report"
-    body = "This is your daily report."
+# Load the dotenv file
+load_dotenv()
+
+# get the current date and time
+now = datetime.datetime.now()
+
+# Get email configuration from environment variables
+sender_email = os.getenv("SENDER_EMAIL")
+sender_password = os.getenv("SENDER_PASSWORD")
+receiver_email = os.getenv("RECEIVER_EMAIL")
+subject = os.getenv("EMAIL_SUBJECT", f"Daily Report {now}")
+body = os.getenv("EMAIL_BODY", "This is your daily report.")
+
+
+def send_email(sender_email, sender_password, receiver_email, subject=None, body=None):
+    if subject is None:
+        subject = f"Daily Report {now}"
+    if body is None:
+        body = "This is your daily report."
 
     # Create message
     message = MIMEMultipart()
