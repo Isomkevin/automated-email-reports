@@ -10,9 +10,6 @@ from dotenv import load_dotenv
 # Load the dotenv file
 load_dotenv()
 
-# get the current date and time
-now = datetime.datetime.now()
-
 # Get email configuration from environment variables
 sender_email = os.getenv("SENDER_EMAIL")
 sender_password = os.getenv("SENDER_PASSWORD")
@@ -20,6 +17,8 @@ receiver_email = os.getenv("RECEIVER_EMAIL")
 subject = os.getenv("EMAIL_SUBJECT", f"Daily Report {now}")
 body = os.getenv("EMAIL_BODY", "This is your daily report.")
 
+# get the current date and time
+now = datetime.datetime.now()
 
 def send_email(sender_email, sender_password, receiver_email, subject=None, body=None):
     if subject is None:
